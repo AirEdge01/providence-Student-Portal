@@ -32,7 +32,7 @@ export default function Login() {
             <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: "540px", padding: "clamp(24px, 4vw, 48px)", boxShadow: "0 20px 50px rgba(0,0,0,0.25)" }}>
                 <div style={{ textAlign: "center", marginBottom: 26 }}>
                     <img
-                        src="/provi.png"
+                        src="/src/assets/provi.png"
                         alt="Providence Logo"
                         onError={(e) => {
                             e.currentTarget.onerror = null;
