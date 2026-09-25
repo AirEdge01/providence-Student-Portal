@@ -5,6 +5,21 @@ import { useAuth } from "../context/AuthContext";
 const navy = "#0F2C59";
 const gold = "#D4AF37";
 
+// Inline SVG logo fallback to guarantee render on Vercel
+function CollegeLogo() {
+    return (
+        <div style={{ width: 64, height: 64, margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill={gold} />
+                <circle cx="32" cy="32" r="29" fill={navy} />
+                <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="28" fill={gold}>
+                    P
+                </text>
+            </svg>
+        </div>
+    );
+}
+
 export default function Signup() {
     const navigate = useNavigate();
     const { signup } = useAuth();
@@ -40,7 +55,7 @@ export default function Signup() {
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         if (form.password !== form.confirmPassword) return setError("Passwords do not match.");
@@ -57,7 +72,8 @@ export default function Signup() {
                     password: form.password,
                 });
             } catch (e) { }
-            signup(form);
+
+            await signup(form);
             localStorage.removeItem("pice_signup_draft");
             navigate("/login");
         } catch (err) {
@@ -69,7 +85,7 @@ export default function Signup() {
                 setError("Matric number appears multiple times in the registry. Please contact ICT.");
                 return;
             }
-            setError(err.message || String(err));
+            setError(err?.message || String(err));
         } finally {
             setLoading(false);
         }
@@ -79,17 +95,7 @@ export default function Signup() {
         <div style={{ minHeight: "100vh", width: "100vw", display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${navy}, #163a73)`, padding: "30px 20px", boxSizing: "border-box" }}>
             <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: "1200px", padding: "clamp(24px, 4vw, 48px)", boxShadow: "0 20px 50px rgba(0,0,0,0.25)" }}>
                 <div style={{ textAlign: "center", marginBottom: 26 }}>
-                    <img
-                        src="/src/assets/provi.png"
-                        alt="Providence Logo"
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-                                `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect rx="32" width="64" height="64" fill="${gold}"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="${navy}">P</text></svg>`
-                            );
-                        }}
-                        style={{ width: 64, height: 64, borderRadius: "50%", display: "block", objectFit: "cover", margin: "0 auto 12px" }}
-                    />
+                    <CollegeLogo />
                     <h4 style={{ color: navy, fontWeight: 700, marginBottom: 4 }}>Student Portal Registration</h4>
                     <p style={{ color: "#6c757d", fontSize: 14 }}>Providence International College of Education</p>
                 </div>
@@ -116,7 +122,7 @@ export default function Signup() {
                         <Field label="Confirm Password" name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Re-enter password" />
                     </div>
 
-                    <button type="submit" disabled={loading} style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "14px 0", borderRadius: 8, fontWeight: 600, fontSize: 16, marginTop: 28 }}>
+                    <button type="submit" disabled={loading} style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "14px 0", borderRadius: 8, fontWeight: 600, fontSize: 16, marginTop: 28, cursor: loading ? "not-allowed" : "pointer" }}>
                         {loading ? "Creating Account..." : "Create Account"}
                     </button>
                 </form>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+
 const navy = "#0F2C59";
 const gold = "#D4AF37";
 
@@ -12,15 +13,15 @@ export default function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setLoading(true);
         try {
-            login(form.identifier, form.password);
+            await login(form.identifier, form.password);
             navigate("/dashboard");
         } catch (err) {
-            setError(err.message);
+            setError(err.message || "Login failed. Please check your credentials.");
         } finally {
             setLoading(false);
         }
@@ -31,7 +32,7 @@ export default function Login() {
             <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: "540px", padding: "clamp(24px, 4vw, 48px)", boxShadow: "0 20px 50px rgba(0,0,0,0.25)" }}>
                 <div style={{ textAlign: "center", marginBottom: 26 }}>
                     <img
-                        src="/src/assets/provi.png"
+                        src="/provi.png"
                         alt="Providence Logo"
                         onError={(e) => {
                             e.currentTarget.onerror = null;
@@ -49,14 +50,14 @@ export default function Login() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label style={labelStyle}>Matric Number or Email</label>
+                        <label style={labelStyle}>Matric Number </label>
                         <input type="text" required value={form.identifier} onChange={(e) => setForm({ ...form, identifier: e.target.value })} className="form-control" style={inputStyle} placeholder="PICE/2026/0001 or you@example.com" />
                     </div>
                     <div className="mb-3">
                         <label style={labelStyle}>Password</label>
                         <input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="form-control" style={inputStyle} placeholder="Enter your password" />
                     </div>
-                    <button type="submit" disabled={loading} style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "14px 0", borderRadius: 8, fontWeight: 600, fontSize: 16, marginTop: 12 }}>
+                    <button type="submit" disabled={loading} style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "14px 0", borderRadius: 8, fontWeight: 600, fontSize: 16, marginTop: 12, cursor: loading ? "not-allowed" : "pointer" }}>
                         {loading ? "Logging in..." : "Log In"}
                     </button>
                 </form>
