@@ -31,17 +31,8 @@ export default function Login() {
         <div style={{ minHeight: "100vh", width: "100vw", display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${navy}, #163a73)`, padding: "30px 20px", boxSizing: "border-box" }}>
             <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: "540px", padding: "clamp(24px, 4vw, 48px)", boxShadow: "0 20px 50px rgba(0,0,0,0.25)" }}>
                 <div style={{ textAlign: "center", marginBottom: 26 }}>
-                    <img
-                        src="/src/assets/provi.png"
-                        alt="Providence Logo"
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-                                `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect rx="32" width="64" height="64" fill="${gold}"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="${navy}">P</text></svg>`
-                            );
-                        }}
-                        style={{ width: 64, height: 64, borderRadius: "50%", display: "block", objectFit: "cover", margin: "0 auto 12px" }}
-                    />
+                    <img src="/src/assets/provi.png" alt="Providence Logo"
+                    style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover" }}></img>
                     <h4 style={{ color: navy, fontWeight: 700, marginBottom: 4 }}>Student Portal Login</h4>
                     <p style={{ color: "#6c757d", fontSize: 14 }}>Providence International College of Education</p>
                 </div>
