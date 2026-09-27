@@ -16,11 +16,26 @@ export default function Profile() {
 
     return (
         <DashboardLayout>
-            <div style={{ width: "100vw", maxWidth: "100%", margin: 0, padding: "0 10px", boxSizing: "border-box" }}>
+            <style>{`
+                .pice-full-wrapper {
+                    width: 100vw;
+                    max-width: 100vw;
+                    margin: 0;
+                    padding: 0 10px;
+                    box-sizing: border-box;
+                }
+                @media (min-width: 992px) {
+                    .pice-full-wrapper {
+                        width: calc(100vw - 260px);
+                        max-width: calc(100vw - 260px);
+                    }
+                }
+            `}</style>
+
+            <div className="pice-full-wrapper">
                 <Breadcrumb current="My Profile" />
                 
                 <div className="row g-4" style={{ width: "100%", margin: 0 }}>
-                    {/* Left Column - Profile Avatar Card */}
                     <div className="col-12 col-lg-4 px-2">
                         <div style={cardStyle}>
                             <img
@@ -83,7 +98,6 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    {/* Right Column - Academic Details & GPA */}
                     <div className="col-12 col-lg-8 px-2">
                         <div style={cardStyle}>
                             <h6 style={{ color: navy, fontWeight: 700, marginBottom: 18 }}>Academic Information</h6>

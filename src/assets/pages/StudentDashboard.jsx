@@ -10,10 +10,25 @@ export default function StudentDashboard() {
 
     return (
         <DashboardLayout>
-            <div style={{ width: "100vw", maxWidth: "100%", margin: 0, padding: "0 10px", boxSizing: "border-box" }}>
+            <style>{`
+                .pice-full-wrapper {
+                    width: 100vw;
+                    max-width: 100vw;
+                    margin: 0;
+                    padding: 0 10px;
+                    box-sizing: border-box;
+                }
+                @media (min-width: 992px) {
+                    .pice-full-wrapper {
+                        width: calc(100vw - 260px);
+                        max-width: calc(100vw - 260px);
+                    }
+                }
+            `}</style>
+
+            <div className="pice-full-wrapper">
                 <Breadcrumb current="Overview" />
 
-                {/* Banner */}
                 <div 
                     style={{ 
                         background: `linear-gradient(120deg, ${navy}, #163a73)`, 
@@ -52,7 +67,6 @@ export default function StudentDashboard() {
                     </div>
                 </div>
 
-                {/* Full Width Grid */}
                 <div className="row g-4" style={{ width: "100%", margin: 0 }}>
                     <div className="col-12 col-md-6 col-lg-4 px-2">
                         <div style={cardStyle}>

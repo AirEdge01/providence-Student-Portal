@@ -2,26 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+// Corrected import path from src/assets/pages/ up to src/assets/
+import logoImg from "../provi.png";
+
 const navy = "#0F2C59";
 const gold = "#D4AF37";
 
-// Inline SVG logo fallback to guarantee render on Vercel
 function CollegeLogo() {
-    // return (
-    //     <div style={{ width: 64, height: 64, margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-    //         <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //             <circle cx="32" cy="32" r="32" fill={gold} />
-    //             <circle cx="32" cy="32" r="29" fill={navy} />
-    //             <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="28" fill={gold}>
-    //                 P
-    //             </text>
-    //         </svg>
-    //     </div>
-    // );
-
     return (
         <div style={{ width: 64, height: 64, margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <img src="/src/assets/provi.png" alt="Providence Logo"
+            <img 
+                src={logoImg} 
+                alt="Providence Logo"
                 style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover" }}
             />
         </div>
