@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// Corrected module import for deployed production builds
+// Import logo asset safely for deployment bundlers
 import logoImg from "../provi.png";
 
 const navy = "#0F2C59";
@@ -18,12 +18,36 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+
+        // 1. Clean and normalize input string
+        const cleanIdentifier = form.identifier.trim();
+        const cleanPassword = form.password;
+
+        if (!cleanIdentifier || !cleanPassword) {
+            return setError("Please enter both your Matric Number / Email and Password.");
+        }
+
         setLoading(true);
         try {
-            await login(form.identifier, form.password);
+            // 2. Call auth login handler with sanitized credentials
+            await login(cleanIdentifier, cleanPassword);
+            
+            // 3. Clear temporary registration cache on successful login
+            try {
+                localStorage.removeItem("pice_signup_draft");
+            } catch (e) {}
+
             navigate("/dashboard");
         } catch (err) {
-            setError(err.message || "Login failed. Please check your credentials.");
+            console.error("Login Error:", err);
+            
+            // 4. Robust error message extraction
+            const message = 
+                err?.response?.data?.message || 
+                err?.message || 
+                (typeof err === "string" ? err : "Invalid credentials. Please verify your Matric Number / Email and Password.");
+            
+            setError(message);
         } finally {
             setLoading(false);
         }
@@ -46,14 +70,48 @@ export default function Login() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label style={labelStyle}>Matric Number </label>
-                        <input type="text" required value={form.identifier} onChange={(e) => setForm({ ...form, identifier: e.target.value })} className="form-control" style={inputStyle} placeholder="PICE/2026/0001 or you@example.com" />
+                        <label style={labelStyle}>Matric Number or Email</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={form.identifier} 
+                            onChange={(e) => setForm({ ...form, identifier: e.target.value })} 
+                            className="form-control" 
+                            style={inputStyle} 
+                            placeholder="PICE/2026/0001 or you@example.com" 
+                            autoCapitalize="none"
+                            autoCorrect="off"
+                        />
                     </div>
                     <div className="mb-3">
                         <label style={labelStyle}>Password</label>
-                        <input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="form-control" style={inputStyle} placeholder="Enter your password" />
+                        <input 
+                            type="password" 
+                            required 
+                            value={form.password} 
+                            onChange={(e) => setForm({ ...form, password: e.target.value })} 
+                            className="form-control" 
+                            style={inputStyle} 
+                            placeholder="Enter your password" 
+                        />
                     </div>
-                    <button type="submit" disabled={loading} style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "14px 0", borderRadius: 8, fontWeight: 600, fontSize: 16, marginTop: 12, cursor: loading ? "not-allowed" : "pointer" }}>
+                    <button 
+                        type="submit" 
+                        disabled={loading} 
+                        style={{ 
+                            width: "100%", 
+                            background: navy, 
+                            color: "#fff", 
+                            border: "none", 
+                            padding: "14px 0", 
+                            borderRadius: 8, 
+                            fontWeight: 600, 
+                            fontSize: 16, 
+                            marginTop: 12, 
+                            cursor: loading ? "not-allowed" : "pointer",
+                            opacity: loading ? 0.7 : 1
+                        }}
+                    >
                         {loading ? "Logging in..." : "Log In"}
                     </button>
                 </form>
