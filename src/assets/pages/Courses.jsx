@@ -245,12 +245,14 @@ export default function Courses() {
   return (
     <DashboardLayout>
       <style>{`
+          html { overflow-y: scroll; }
           .pice-full-wrapper {
-              width: 100vw;
-              max-width: 100vw;
+              width: 100%;
+              max-width: 100%;
               margin: 0;
               padding: 0 10px;
               box-sizing: border-box;
+              overflow-x: hidden;
           }
           @media (min-width: 992px) {
               .pice-full-wrapper {
@@ -279,7 +281,7 @@ export default function Courses() {
         {!showForm ? (
           <div style={cardStyle}>
             <h6 style={{ color: navy, fontWeight: 700, marginBottom: 6 }}>
-              Register Courses — {student.level} • {student.currentSession}
+              Register Courses for {student.level}, {student.currentSession} Session
             </h6>
             <p style={{ color: "#6c757d", fontSize: 14, marginBottom: 20 }}>
               Select the courses offered for your level, then submit to
@@ -348,7 +350,7 @@ export default function Courses() {
                   <span style={{ fontSize: 14, color: "#6c757d" }}>
                     Selected:{" "}
                     <strong style={{ color: navy }}>{selected.length}</strong>{" "}
-                    course(s) •{" "}
+                    course(s), total{" "}
                     {selected.reduce((s, c) => s + (c.creditUnit || 0), 0)}{" "}
                     unit(s)
                   </span>
@@ -383,7 +385,7 @@ export default function Courses() {
               }}
             >
               <h6 style={{ color: navy, fontWeight: 700, margin: 0 }}>
-                Registered Courses — {student.level} • {student.currentSession}
+                Registered Courses for {student.level}, {student.currentSession} Session
               </h6>
               <div style={{ display: "flex", gap: 10 }}>
                 <button

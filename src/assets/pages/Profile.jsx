@@ -17,12 +17,14 @@ export default function Profile() {
     return (
         <DashboardLayout>
             <style>{`
+                html { overflow-y: scroll; }
                 .pice-full-wrapper {
-                    width: 100vw;
-                    max-width: 100vw;
+                    width: 100%;
+                    max-width: 100%;
                     margin: 0;
                     padding: 0 10px;
                     box-sizing: border-box;
+                    overflow-x: hidden;
                 }
                 @media (min-width: 992px) {
                     .pice-full-wrapper {

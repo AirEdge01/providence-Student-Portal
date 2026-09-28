@@ -11,12 +11,14 @@ export default function StudentDashboard() {
     return (
         <DashboardLayout>
             <style>{`
+                html { overflow-y: scroll; }
                 .pice-full-wrapper {
-                    width: 100vw;
-                    max-width: 100vw;
+                    width: 100%;
+                    max-width: 100%;
                     margin: 0;
                     padding: 0 10px;
                     box-sizing: border-box;
+                    overflow-x: hidden;
                 }
                 @media (min-width: 992px) {
                     .pice-full-wrapper {
@@ -50,7 +52,7 @@ export default function StudentDashboard() {
                             Welcome, {student?.fullName?.split(" ")[0]} 👋
                         </h4>
                         <p style={{ opacity: 0.85, fontSize: 14.5, marginBottom: 0 }}>
-                            {student?.courseOfStudy || "Student"} • {student?.faculty || "—"}
+                            {student?.courseOfStudy || "Student"} at {student?.faculty || "Providence International College of Education"}
                         </p>
                     </div>
                     <div 
@@ -63,7 +65,7 @@ export default function StudentDashboard() {
                             fontSize: 13.5 
                         }}
                     >
-                        {student?.level || "—"} • {student?.currentSession || "—"}
+                        {student?.level || "Level not set"} {student?.currentSession || ""}
                     </div>
                 </div>
 

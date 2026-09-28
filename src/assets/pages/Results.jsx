@@ -1,122 +1,3 @@
-// import React from "react";
-// import DashboardLayout from "../components/DashboardLayout";
-// import { useAuth } from "../context/AuthContext";
-
-// const navy = "#0F2C59";
-// const gold = "#D4AF37";
-
-// export default function Results() {
-//   const { student } = useAuth();
-//   const results = student?.results || [];
-//   const bySession = results.reduce((acc, r) => {
-//     if (!acc[r.session]) acc[r.session] = [];
-//     acc[r.session].push(r);
-//     return acc;
-//   }, {});
-
-//   return (
-//     <DashboardLayout>
-//       <Breadcrumb current="My Results" />
-//       <div className="row g-3 mb-4">
-//         <div className="col-md-4"><div style={{ ...cardStyle, textAlign: "center" }}><div style={{ fontSize: 13, color: "#6c757d" }}>Current CGPA</div><div style={{ fontSize: 32, fontWeight: 800, color: navy }}>{student?.cgpa?.toFixed(2) || "0.00"}</div></div></div>
-//         <div className="col-md-4"><div style={{ ...cardStyle, textAlign: "center" }}><div style={{ fontSize: 13, color: "#6c757d" }}>Current Level</div><div style={{ fontSize: 32, fontWeight: 800, color: navy }}>{student?.level}</div></div></div>
-//         <div className="col-md-4"><div style={{ ...cardStyle, textAlign: "center" }}><div style={{ fontSize: 13, color: "#6c757d" }}>Results Recorded</div><div style={{ fontSize: 32, fontWeight: 800, color: navy }}>{results.length}</div></div></div>
-//       </div>
-
-//       {Object.keys(bySession).length === 0 ? <div style={cardStyle}><EmptyState text="No results have been published yet." /></div> : (
-//         Object.entries(bySession).map(([session, sessionResults]) => (
-//           <div key={session} style={{ ...cardStyle, marginBottom: 20 }}>
-//             <h6 style={{ color: navy, fontWeight: 700, marginBottom: 16 }}>{session} Session</h6>
-//             <div className="table-responsive">
-//               <table className="table align-middle">
-//                 <thead><tr style={{ fontSize: 13.5, color: navy }}><th>Code</th><th>Title</th><th>Unit</th><th>Score</th><th>Grade</th><th>Grade Point</th></tr></thead>
-//                 <tbody>
-//                   {sessionResults.map((r, i) => (
-//                     <tr key={i} style={{ fontSize: 14 }}>
-//                       <td style={{ fontWeight: 600, color: navy }}>{r.courseCode}</td>
-//                       <td>{r.courseTitle}</td>
-//                       <td>{r.creditUnit}</td>
-//                       <td>{r.score}</td>
-//                       <td><span className="badge" style={{ background: gold, color: navy }}>{r.grade || "-"}</span></td>
-//                       <td>{r.gradePoint ?? "-"}</td>
-//                     </tr>
-//                   ))}
-//                 </tbody>
-//               </table>
-//             </div>
-//             <div style={{ textAlign: 'right', marginTop: 8 }}>
-//               <button className="btn btn-sm btn-outline-primary" onClick={() => downloadSessionPDF(session, sessionResults, student)}>
-//                 Download PDF
-//               </button>
-//             </div>
-//           </div>
-//         ))
-//       )}
-//     </DashboardLayout>
-//   );
-// }
-
-// function downloadSessionPDF(session, sessionResults, student) {
-//   try {
-//     const { jsPDF } = window.jspdf || {};
-//     if (!jsPDF) { alert('PDF library not loaded'); return; }
-//     const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-//     const pageWidth = 210; // mm
-//     let y = 20;
-//     doc.setFontSize(16);
-//     doc.text(`${student.fullName}`, pageWidth / 2, y, { align: 'center' });
-//     y += 8;
-//     doc.setFontSize(12);
-//     doc.text(`${student.matricNumber} — ${student.programme || ''}`, pageWidth / 2, y, { align: 'center' });
-//     y += 8;
-//     doc.setFontSize(12);
-//     doc.text(`${session} — Results`, 14, y);
-//     y += 8;
-
-//     // table header
-//     doc.setFontSize(11);
-//     const headings = ['Code', 'Title', 'Unit', 'Score', 'Grade', 'Point'];
-//     doc.text(headings.join('  '), 14, y);
-//     y += 6;
-
-//     sessionResults.forEach((r) => {
-//       const line = [r.courseCode, r.courseTitle, String(r.creditUnit), String(r.score), r.grade || '-', String(r.gradePoint ?? '-')];
-//       // wrap title if too long
-//       doc.text(line.join('  '), 14, y);
-//       y += 6;
-//       if (y > 275) { doc.addPage(); y = 20; }
-//     });
-
-//     y += 6;
-//     doc.setFontSize(11);
-//     doc.text(`CGPA: ${Number(student.cgpa || 0).toFixed(2)}`, 14, y);
-
-//     doc.save(`${student.matricNumber}_${session}_results.pdf`);
-//   } catch (err) {
-//     // eslint-disable-next-line no-console
-//     console.error(err);
-//     alert('Failed to generate PDF');
-//   }
-// }
-
-// function EmptyState({ text }) {
-//   return <div style={{ textAlign: "center", padding: "40px 0", color: "#adb5bd" }}><i className="bi bi-inbox" style={{ fontSize: 34 }}></i><p style={{ marginTop: 8, fontSize: 14 }}>{text}</p></div>;
-// }
-
-// function Breadcrumb({ current }) {
-//   return (
-//     <nav style={{ marginBottom: 18 }}>
-//       <ol className="breadcrumb" style={{ marginBottom: 0, fontSize: 14 }}>
-//         <li className="breadcrumb-item" style={{ color: "#6c757d" }}>Dashboard</li>
-//         <li className="breadcrumb-item active" style={{ color: navy, fontWeight: 600 }}>{current}</li>
-//       </ol>
-//     </nav>
-//   );
-// }
-
-// const cardStyle = { background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 4px 14px rgba(15,44,89,0.06)" };
-
-
 import React, { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useAuth } from "../context/AuthContext";
@@ -133,7 +14,7 @@ export default function Results() {
     return acc;
   }, {});
 
-  const [printSession, setPrintSession] = useState(null); // null | "ALL" | a session string
+  const [printSession, setPrintSession] = useState(null);
 
   const handlePrintSession = (session) => {
     setPrintSession(session);
@@ -147,7 +28,27 @@ export default function Results() {
 
   return (
     <DashboardLayout>
-      <div className="no-print-page">
+      <style>{`
+          html { overflow-y: scroll; }
+          .pice-full-wrapper {
+              width: 100%;
+              max-width: 100%;
+              margin: 0;
+              padding: 0 10px;
+              box-sizing: border-box;
+              overflow-x: hidden;
+          }
+          @media (min-width: 992px) {
+              .pice-full-wrapper {
+                  width: calc(100vw - 260px);
+                  max-width: calc(100vw - 260px);
+              }
+          }
+          .print-only { display: none; }
+          @media print { .no-print-page { display: none !important; } .print-only { display: block !important; } }
+      `}</style>
+
+      <div className="pice-full-wrapper no-print-page">
         <Breadcrumb current="My Results" />
 
         <div className="row g-3 mb-4">
@@ -214,11 +115,6 @@ export default function Results() {
           />
         )}
       </div>
-
-      <style>{`
-        .print-only { display: none; }
-        @media print { .no-print-page { display: none !important; } .print-only { display: block !important; } }
-      `}</style>
     </DashboardLayout>
   );
 }
@@ -275,7 +171,7 @@ function PrintableResultSheet({ student, bySession }) {
       })}
 
       <div style={{ borderTop: "2px solid #0F2C59", paddingTop: 10, marginTop: 10 }}>
-        <p style={{ fontSize: 14, fontWeight: 700 }}>Cumulative GPA (CGPA): {Number(student?.cgpa || 0).toFixed(2)}</p>
+        <p style={{ fontSize: 14, fontWeight: 700 }}>Cumulative GPA, CGPA: {Number(student?.cgpa || 0).toFixed(2)}</p>
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 60, fontSize: 14 }}>

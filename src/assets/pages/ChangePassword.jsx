@@ -29,18 +29,38 @@ export default function ChangePassword() {
 
   return (
     <DashboardLayout>
-      <Breadcrumb current="Change Password" />
-      <div className="row justify-content-center">
-        <div className="col-lg-6">
-          <div style={cardStyle}>
-            <h6 style={{ color: navy, fontWeight: 700, marginBottom: 18 }}>Update Your Password</h6>
-            {message.text && <div className={`alert alert-${message.type} py-2`} style={{ fontSize: 14 }}>{message.text}</div>}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3"><label style={labelStyle}>Current Password</label><input type="password" name="currentPassword" required value={form.currentPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
-              <div className="mb-3"><label style={labelStyle}>New Password</label><input type="password" name="newPassword" required value={form.newPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
-              <div className="mb-3"><label style={labelStyle}>Confirm New Password</label><input type="password" name="confirmPassword" required value={form.confirmPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
-              <button type="submit" style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "11px 0", borderRadius: 8, fontWeight: 600, fontSize: 14.5 }}>Update Password</button>
-            </form>
+      <style>{`
+          html { overflow-y: scroll; }
+          .pice-full-wrapper {
+              width: 100%;
+              max-width: 100%;
+              margin: 0;
+              padding: 0 10px;
+              box-sizing: border-box;
+              overflow-x: hidden;
+          }
+          @media (min-width: 992px) {
+              .pice-full-wrapper {
+                  width: calc(100vw - 260px);
+                  max-width: calc(100vw - 260px);
+              }
+          }
+      `}</style>
+
+      <div className="pice-full-wrapper">
+        <Breadcrumb current="Change Password" />
+        <div className="row justify-content-center" style={{ width: "100%", margin: 0 }}>
+          <div className="col-12 col-lg-6 px-2">
+            <div style={cardStyle}>
+              <h6 style={{ color: navy, fontWeight: 700, marginBottom: 18 }}>Update Your Password</h6>
+              {message.text && <div className={`alert alert-${message.type} py-2`} style={{ fontSize: 14 }}>{message.text}</div>}
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3"><label style={labelStyle}>Current Password</label><input type="password" name="currentPassword" required value={form.currentPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
+                <div className="mb-3"><label style={labelStyle}>New Password</label><input type="password" name="newPassword" required value={form.newPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
+                <div className="mb-3"><label style={labelStyle}>Confirm New Password</label><input type="password" name="confirmPassword" required value={form.confirmPassword} onChange={handleChange} className="form-control" style={inputStyle} /></div>
+                <button type="submit" style={{ width: "100%", background: navy, color: "#fff", border: "none", padding: "11px 0", borderRadius: 8, fontWeight: 600, fontSize: 14.5 }}>Update Password</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
